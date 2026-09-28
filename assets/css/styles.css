@@ -1,0 +1,1221 @@
+/* ==========================================================================
+   Armazém da Ju
+   Sumário
+   1. Fontes e tokens
+   2. Base
+   3. Utilitários e componentes (botões, links, eyebrow)
+   4. Cabeçalho
+   5. Hero
+   6. Seções (estrutura comum)
+   7. Para criar
+   8. Saboaria artesanal
+   9. A loja
+   10. Avaliações
+   11. Onde fica
+   12. Chamada final
+   13. Rodapé
+   14. Botão de WhatsApp
+   15. Movimento
+   ========================================================================== */
+
+/* 1. Fontes e tokens
+   ========================================================================== */
+
+@font-face {
+  font-family: "EB Garamond";
+  src: url("../fonts/eb-garamond-normal-latin.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EB Garamond";
+  src: url("../fonts/eb-garamond-italic-latin.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mulish";
+  src: url("../fonts/mulish-normal-latin.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Cores extraídas do logo */
+  --ink: #1e1b07;         /* contorno e letras do logo */
+  --butter: #fef8aa;      /* fundo do rótulo */
+
+  /* Variações e neutros de apoio */
+  --butter-100: #fffbd6;
+  --paper: #fffcf0;       /* papel: fundo claro da página */
+  --linen: #f1e9d6;       /* juta e linho das fotos */
+  --line: #d6ccb0;
+  --ink-soft: #595238;
+  --ink-line: #454026;
+  --paper-soft: #cbc4a6;  /* texto secundário sobre fundo escuro */
+  --rose: #a63d57;        /* rosa dos rótulos e das flores */
+  --rose-dark: #86304a;
+  --whatsapp: #25d366;    /* verde oficial do WhatsApp */
+
+  --font-display: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-body: "Mulish", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --gutter: clamp(20px, 5vw, 48px);
+  --section-space: clamp(72px, 10vw, 136px);
+  --header-height: 80px;
+  --radius: 6px;
+  --focus: var(--rose);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (min-width: 980px) {
+  :root {
+    --header-height: 96px;
+  }
+}
+
+/* 2. Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  scroll-padding-top: calc(var(--header-height) + 16px);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+blockquote,
+ul,
+ol {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+address {
+  font-style: normal;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.section--dark :focus-visible,
+.closing :focus-visible {
+  outline-color: var(--butter);
+}
+
+::selection {
+  background: var(--butter);
+  color: var(--ink);
+}
+
+/* 3. Utilitários e componentes
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.icon {
+  flex: none;
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  padding: 12px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 700;
+  border-radius: var(--radius);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--rose);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  flex: none;
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
+.section--dark .eyebrow {
+  color: var(--butter);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 12px 30px;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.btn--small {
+  min-height: 46px;
+  padding: 8px 22px;
+  font-size: 0.9375rem;
+}
+
+.btn--ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn--ink:hover {
+  background: var(--rose-dark);
+}
+
+.btn--butter {
+  background: var(--butter);
+  color: var(--ink);
+}
+
+.btn--butter:hover {
+  background: var(--paper);
+}
+
+.btn--outline {
+  border-color: var(--ink-line);
+  color: var(--paper);
+}
+
+.btn--outline:hover {
+  border-color: var(--butter);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-block: 6px;
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--rose);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 6px;
+  transition: color 0.2s var(--ease);
+}
+
+.link-arrow:hover {
+  color: var(--rose);
+}
+
+.link-arrow .icon {
+  transition: transform 0.2s var(--ease);
+}
+
+.link-arrow:hover .icon {
+  transform: translateX(3px);
+}
+
+.link-arrow[href^="#"]:hover .icon {
+  transform: translateY(3px);
+}
+
+/* 4. Cabeçalho
+   ========================================================================== */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: var(--header-height);
+}
+
+.header__logo {
+  flex: none;
+  display: block;
+}
+
+.header__logo img {
+  width: 108px;
+  height: auto;
+}
+
+.header__toggle {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 8px 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.header__toggle-icon {
+  display: grid;
+  gap: 6px;
+  width: 20px;
+}
+
+.header__toggle-icon span {
+  display: block;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.25s var(--ease);
+}
+
+.header__toggle[aria-expanded="true"] .header__toggle-icon span:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+}
+
+.header__toggle[aria-expanded="true"] .header__toggle-icon span:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px 28px;
+  padding-block: 12px;
+}
+
+.nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+}
+
+.nav__list a {
+  display: inline-block;
+  padding-block: 10px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1.5px solid transparent;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.nav__list a:hover {
+  color: var(--rose);
+  border-bottom-color: var(--rose);
+}
+
+@media (max-width: 1059px) {
+  .js .header__toggle {
+    display: inline-flex;
+  }
+
+  .js .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    max-height: calc(100vh - var(--header-height));
+    max-height: calc(100dvh - var(--header-height));
+    overflow-y: auto;
+    padding: 12px var(--gutter) 28px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .js .nav.is-open {
+    display: flex;
+  }
+
+  .js .nav__list {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .js .nav__list a {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    padding-block: 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 1.0625rem;
+  }
+
+  .js .nav__cta {
+    width: 100%;
+    min-height: 56px;
+  }
+}
+
+@media (min-width: 980px) {
+  .header__logo img {
+    width: 128px;
+  }
+}
+
+/* 5. Hero
+   ========================================================================== */
+
+.hero {
+  padding-top: clamp(40px, 6vw, 80px);
+  overflow: hidden;
+}
+
+.hero__grid {
+  display: grid;
+  gap: 56px;
+}
+
+.hero__title {
+  margin-top: 20px;
+  font-family: var(--font-display);
+  /* cada linha mede 7,8em: o tamanho acompanha a largura da coluna */
+  font-size: clamp(2rem, 12.2vw - 6px, 4.5rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+}
+
+.hero__title em,
+.section__title em,
+.closing__title em {
+  display: block;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--rose);
+}
+
+.hero__lead {
+  max-width: 34em;
+  margin-top: 24px;
+  color: var(--ink-soft);
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+  margin-top: 36px;
+}
+
+.hero__hint {
+  max-width: 30em;
+  margin-top: 20px;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+}
+
+/* Foto em arco com filete: retoma o topo curvo e o contorno do rótulo do logo */
+.hero__figure {
+  position: relative;
+  justify-self: center;
+  width: min(100% - 24px, 420px);
+}
+
+.hero__figure::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px 999px 0 0;
+}
+
+.hero__figure img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 100%;
+  border-radius: 999px 999px 0 0;
+}
+
+.facts {
+  display: grid;
+  margin-top: clamp(56px, 7vw, 88px);
+  border-top: 1px solid var(--line);
+}
+
+.facts__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-block: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.facts__label {
+  color: var(--rose);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.facts__value {
+  font-family: var(--font-display);
+  font-size: 1.4375rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+@media (max-width: 479px) {
+  .hero__actions .btn {
+    width: 100%;
+  }
+}
+
+@media (min-width: 700px) {
+  .facts {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .facts__item {
+    padding: 24px 24px 28px 0;
+    border-bottom: 0;
+  }
+
+  .facts__item + .facts__item {
+    padding-left: 24px;
+    border-left: 1px solid var(--line);
+  }
+}
+
+@media (min-width: 900px) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: clamp(48px, 6vw, 96px);
+  }
+
+  .hero__title {
+    font-size: clamp(3rem, 6.4vw - 4px, 4.625rem);
+  }
+
+  .hero__figure {
+    justify-self: end;
+    width: min(100% - 24px, 460px);
+    margin-right: 12px;
+  }
+}
+
+/* 6. Seções
+   ========================================================================== */
+
+.section {
+  padding-block: var(--section-space);
+}
+
+.section--paper {
+  background: var(--paper);
+}
+
+.section--linen {
+  background: var(--linen);
+}
+
+.section--butter {
+  background: var(--butter-100);
+}
+
+.section--dark {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.section__title {
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.section--dark .section__title em,
+.closing__title em {
+  color: var(--butter);
+}
+
+.section__lead {
+  max-width: 34em;
+  margin-top: 22px;
+  color: var(--ink-soft);
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+}
+
+.section--dark .section__lead {
+  color: var(--paper-soft);
+}
+
+figcaption {
+  margin-top: 12px;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+}
+
+.section--dark figcaption {
+  color: var(--paper-soft);
+}
+
+/* 7. Para criar
+   ========================================================================== */
+
+.supplies__grid {
+  display: grid;
+  gap: 56px;
+}
+
+.supplies__figure img {
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+.supplies__list {
+  display: grid;
+  margin-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.supply {
+  padding-block: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.supply__name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.supply__text {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+.supplies__note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  margin-top: 32px;
+  color: var(--ink-soft);
+}
+
+.supplies__note .link-arrow {
+  color: var(--ink);
+}
+
+.supplies__note .link-arrow:hover {
+  color: var(--rose);
+}
+
+@media (min-width: 600px) {
+  .supplies__list {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+  }
+}
+
+@media (min-width: 900px) {
+  .supplies__grid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: start;
+    gap: clamp(48px, 7vw, 104px);
+  }
+
+  .supplies__figure {
+    position: sticky;
+    top: calc(var(--header-height) + 32px);
+  }
+}
+
+/* 8. Saboaria artesanal
+   ========================================================================== */
+
+.soap__grid {
+  display: grid;
+  gap: 56px;
+}
+
+.soap__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.soap__tags li {
+  padding: 8px 18px;
+  border: 1px solid var(--ink-line);
+  border-radius: 999px;
+  color: var(--butter);
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.soap__actions {
+  margin-top: 36px;
+}
+
+.soap__media {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.soap__main img,
+.soap__detail img {
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+/* a foto menor começa mais abaixo, em degrau */
+.soap__detail {
+  margin-top: 38%;
+}
+
+.soap__detail img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 80%;
+}
+
+@media (max-width: 479px) {
+  .soap__actions .btn {
+    width: 100%;
+  }
+}
+
+@media (min-width: 900px) {
+  .soap__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(48px, 7vw, 104px);
+  }
+
+  .soap__media {
+    gap: 20px;
+  }
+}
+
+/* 9. A loja
+   ========================================================================== */
+
+.shop__grid {
+  display: grid;
+  gap: 48px;
+}
+
+.shop__figure img {
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+/* Plaquinha: referência à placa de madeira que aparece na foto */
+.shop__sign {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 36px;
+  padding: 18px 26px 20px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  outline: 1px solid var(--line);
+  outline-offset: 5px;
+}
+
+.shop__sign-label {
+  color: var(--rose);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.shop__sign-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.4375rem, 1.25rem + 0.9vw, 1.75rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+@media (min-width: 900px) {
+  .shop__grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(48px, 7vw, 104px);
+  }
+}
+
+/* 10. Avaliações
+   ========================================================================== */
+
+.reviews__grid {
+  display: grid;
+  gap: 0 56px;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+.review {
+  padding-block: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.review blockquote p {
+  font-size: 1.125rem;
+}
+
+.review--featured {
+  padding-top: 0;
+  padding-bottom: 44px;
+  border-top: 0;
+}
+
+.review--featured blockquote p {
+  max-width: 24em;
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 1.3rem + 1.7vw, 2.5rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+
+.review--featured blockquote p::before {
+  content: "\201C";
+}
+
+.review--featured blockquote p::after {
+  content: "\201D";
+}
+
+.review__author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+  color: var(--ink);
+}
+
+.review__author img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.review__name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+@media (min-width: 700px) {
+  .reviews__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .review--featured {
+    grid-column: 1 / -1;
+  }
+}
+
+/* 11. Onde fica
+   ========================================================================== */
+
+.visit__grid {
+  display: grid;
+  margin-top: clamp(40px, 5vw, 64px);
+  border-top: 1.5px solid var(--ink);
+}
+
+.way {
+  padding-block: 36px;
+}
+
+.way + .way {
+  border-top: 1px solid var(--line);
+}
+
+.way__number {
+  color: var(--rose);
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+.way__title {
+  margin-top: 14px;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.5rem + 1.1vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.way__text {
+  max-width: 28em;
+  margin-top: 10px;
+  color: var(--ink-soft);
+}
+
+.way__links {
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.way__links a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+
+.way__links a:hover {
+  color: var(--rose);
+}
+
+.way__links .icon {
+  color: var(--rose);
+}
+
+@media (min-width: 800px) {
+  .visit__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .way {
+    padding: 44px clamp(32px, 5vw, 72px) 8px 0;
+  }
+
+  .way + .way {
+    padding-left: clamp(32px, 5vw, 72px);
+    padding-right: 0;
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+}
+
+/* 12. Chamada final
+   ========================================================================== */
+
+.closing {
+  padding-block: var(--section-space);
+  background: var(--ink);
+  color: var(--paper);
+  text-align: center;
+}
+
+.closing__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.closing__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.5rem + 4.4vw, 4.75rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.closing__text {
+  max-width: 30em;
+  margin-top: 22px;
+  color: var(--paper-soft);
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+}
+
+.closing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+@media (max-width: 479px) {
+  .closing__actions,
+  .closing__actions .btn {
+    width: 100%;
+  }
+}
+
+/* 13. Rodapé
+   ========================================================================== */
+
+.footer {
+  padding-top: 56px;
+  background: var(--linen);
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
+
+.footer__grid {
+  display: grid;
+  gap: 40px;
+}
+
+.footer__brand img {
+  width: 140px;
+  height: auto;
+}
+
+.footer__brand p {
+  max-width: 22em;
+  margin-top: 16px;
+}
+
+.footer__heading {
+  margin-bottom: 12px;
+  color: var(--rose);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+
+.footer a:hover {
+  color: var(--rose);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: 48px;
+  /* a folga na base deixa o botão de WhatsApp livre do texto */
+  padding-block: 20px 88px;
+  border-top: 1px solid var(--line);
+  font-size: 0.8125rem;
+}
+
+@media (min-width: 600px) {
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 900px) {
+  .footer__grid {
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 48px;
+  }
+}
+
+/* 14. Botão de WhatsApp
+   ========================================================================== */
+
+.whats-float {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 95;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--whatsapp);
+  color: var(--ink);
+  transition: background-color 0.2s var(--ease);
+}
+
+.whats-float:hover {
+  background: #4be083;
+}
+
+.whats-float:focus-visible {
+  border-radius: 50%;
+}
+
+.whats-float .icon {
+  width: 28px;
+  height: 28px;
+}
+
+@media (min-width: 900px) {
+  .whats-float {
+    right: 24px;
+    bottom: 24px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* 15. Movimento
+   ========================================================================== */
+
+.motion-ok [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.motion-ok [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
